@@ -1,3 +1,2 @@
 #!/bin/bash
-python_code="$PYCODE"
-echo "$python_code" | python3 -
+python3 <<< $PYCODE
