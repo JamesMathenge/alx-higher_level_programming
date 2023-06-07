@@ -1,10 +1,20 @@
 #!/usr/bin/python3
-
-import py_compile
+import compileall
 import os
 
 pyfile = os.environ.get('PYFILE')
+output_file = f"{pyfile}c"
 
-if pyfile:
-    output_file = pyfile + 'c'
-    py_compile.compile(pyfile, output_file=output_file)
+print(f"Compiling {pyfile} ...")
+compileall.compile_file(pyfile, force=True)
+
+pycache_dir = "__pycache__"
+if os.path.isdir(pycache_dir):
+    for file in os.listdir(pycache_dir):
+        if file.startswith(pyfile):
+            os.rename(os.path.join(pycache_dir, file), output_file)
+    os.rmdir(pycache_dir)
+else:
+    print("Error: __pycache__ directory not found.")
+
+
