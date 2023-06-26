@@ -1,17 +1,12 @@
 #!/usr/bin/python3
 def safe_print_list_integers(my_list=[], x=0):
     count = 0
-    try:
-        for item in my_list:
-            try:
-                if isinstance(item, int):
-                    print("{:d}".format(item), end=' ')
-                    count += 1
-                    if count == x:
-                         break
-            except ValueError:
-                pass
-        print()
-    except TypeError:
-        pass
-    return count
+    for i in range(x):
+        try:
+            if isinstance(my_list[i], float):
+                print("{:.2f}".format(my_list[i]), end=" ")
+                count += 1
+        except (ValueError, TypeError, IndexError):
+            continue
+        print("")
+        return count
