@@ -1,5 +1,16 @@
 #!/usr/bin/python3
+"""This module defines a class Student"""
+
+
 class Student:
+    """
+    A class representing a Student.
+
+    Attributes:
+            first_name (str): The first name of the student.
+            last_name (str): The last name of the student.
+            age (int): The age of the student.
+    """
     def __init__(self, first_name, last_name, age):
         """Initializes a new Student instance.
 
