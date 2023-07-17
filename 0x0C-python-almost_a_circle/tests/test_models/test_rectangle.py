@@ -38,3 +38,7 @@ class test_rectangle(unittest.TestCase):
         Testing the Rectangle width getter
         '''
         self.assertEqual(5, self.r.width)
+
+
+if __name__ == "__main__":
+    unittest.main()
