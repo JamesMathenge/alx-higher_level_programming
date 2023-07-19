@@ -96,11 +96,11 @@ class Base:
                 instances = []
                 for row in reader:
                     if cls.__name__ == "Rectangle":
-                        id, width, height, x, y = map(int, row)
-                        instance = cls(width, height, x, y, id)
+                        instance = cls(int(row[1]), int(row[2]), int(
+                            row[3]), int(row[4]), int(row[0]))
                     elif cls.__name__ == "Square":
-                        id, size, x, y = map(int, row)
-                        instance = cls(size, x, y, id)
+                        instance = cls(int(row[1]), int(
+                            row[2]), int(row[3]), int(row[0]))
                     instances.append(instance)
                 return instances
         except FileNotFoundError:
