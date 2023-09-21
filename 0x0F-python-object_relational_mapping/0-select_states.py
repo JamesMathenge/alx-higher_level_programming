@@ -1,45 +1,35 @@
 #!/usr/bin/python3
-import MySQLdb
-import sys
+"""
+Module that connects a python script to a database
+"""
 
 if __name__ == "__main__":
-    if len(sys.argv) != 4:
-        print("Usage: {} < mysql_username >
-              < mysql_password > <database_name >".format(
-            sys.argv[0]))
-        sys.exit(1)
-
-    mysql_username = sys.argv[1]
-    mysql_password = sys.argv[2]
-    database_name = sys.argv[3]
+    import MySQLdb
+    from sys import argv
 
     try:
-        # Connect to the MySQL server
-        db = MySQLdb.connect(
-            host="localhost",
-            user=mysql_username,
-            passwd=mysql_password,
-            db=database_name,
-            port=3306
-        )
+        # Connect to the database using command-line arguments
+        my_db = MySQLdb.connect(
+            host='localhost', user=argv[1], password=argv[2], db=argv[3], port=3306)
 
-        # Create a cursor object to execute SQL queries
-        cursor = db.cursor()
+        # Create a cursor object to interact with the database
+        my_cursor = my_db.cursor()
 
-        # Execute the SQL query to select all states and order by id
-        cursor.execute("SELECT * FROM states ORDER BY id")
+        # Execute a SELECT query to fetch data
+        my_cursor.execute("SELECT * FROM states ORDER BY states.id ASC;")
 
-        # Fetch all the rows
-        rows = cursor.fetchall()
+        # Fetch all the data returned by the query
+        my_data = my_cursor.fetchall()
 
-        # Print the results
-        for row in rows:
+        # Iterate through the fetched data and print each row
+        for row in my_data:
             print(row)
 
     except MySQLdb.Error as e:
-        print("MySQL Error {}: {}".format(e.args[0], e.args[1]))
-        sys.exit(1)
-
+        print(f"Error: {e}")
     finally:
-        # Close the database connection
-        db.close()
+        # Close the cursor and the database connection
+        if 'my_cursor' in locals():
+            my_cursor.close()
+        if 'my_db' in locals():
+            my_db.close()
