@@ -1,25 +1,45 @@
 #!/usr/bin/python3
-"""
-Module that connects a python script to a database
-"""
+import MySQLdb
+import sys
 
 if __name__ == "__main__":
+    if len(sys.argv) != 4:
+        print("Usage: {} < mysql_username >
+              < mysql_password > <database_name >".format(
+            sys.argv[0]))
+        sys.exit(1)
 
-    import MySQLdb
-    from sys import argv
+        mysql_username = sys.argv[1]
+        mysql_password = sys.argv[2]
+        database_name = sys.argv[3]
 
-    my_db = MySQLdb.connect(host='localhost', user=argv[1], password=argv[2],
-                            db=argv[3], port=3306)
+        try:
+            # Connect to the MySQL server
+            db = MySQLdb.connect(
+                host="localhost",
+                user=mysql_username,
+                passwd=mysql_password,
+                db=database_name,
+                port=3306
+            )
 
-    my_cursor = my_db.cursor()
+            # Create a cursor object to execute SQL queries
+            cursor = db.cursor()
 
-    my_cursor.execute("SELECT * FROM states ORDER BY states.id ASC;")
+            # Execute the SQL query to select all states and order by id
+            cursor.execute("SELECT * FROM states ORDER BY id")
 
-    my_data = my_cursor.fetchall()
+            # Fetch all the rows
+            rows = cursor.fetchall()
 
-    for row in my_data:
-        print(row)
+            # Print the results
+            for row in rows:
+                print(row)
 
-        my_cursor.close()
+                except MySQLdb.Error as e:
+                    print("MySQL Error {}: {}".format(e.args[0], e.args[1]))
+                    sys.exit(1)
 
-        my_db.close()
+                    finally:
+                        # Close the database connection
+                        db.close()
