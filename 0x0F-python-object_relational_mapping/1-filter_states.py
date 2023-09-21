@@ -31,8 +31,8 @@ if __name__ == "__main__":
     for data in my_data:
         print(data)
 
-        # Close all cursors
-        my_cursor.close()
+    # Close all cursors
+    my_cursor.close()
 
-        # Close all databases
-        my_db.close()
+    # Close all databases
+    my_db.close()
