@@ -9,8 +9,6 @@ from sqlalchemy.orm import relationship
 from relationship_city import Base, City
 
 
-
-
 class State(Base):
     """defining the state class"""
     __tablename__ = 'states'
